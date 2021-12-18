@@ -243,15 +243,15 @@ def rm(path):
         os.remove(path)
 
 
-def update(path, use_cache_server=True, verify_ssl=True):
+def update(path, use_cache_server=True, verify_ssl=True, old_versions=True):
     rm(path)
 
-    write(path, load(use_cache_server=use_cache_server, verify_ssl=verify_ssl))
+    write(path, load(use_cache_server=use_cache_server, verify_ssl=verify_ssl, old_versions=old_versions))
 
 
-def load_cached(path, use_cache_server=True, verify_ssl=True):
+def load_cached(path, use_cache_server=True, verify_ssl=True, old_versions=True):
     if not exist(path):
-        update(path, use_cache_server=use_cache_server, verify_ssl=verify_ssl)
+        update(path, use_cache_server=use_cache_server, verify_ssl=verify_ssl, old_versions=old_versions)
 
     return read(path)
 
