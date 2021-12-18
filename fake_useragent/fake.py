@@ -19,6 +19,7 @@ class FakeUserAgent(object):
         fallback=None,
         verify_ssl=True,
         safe_attrs=tuple(),
+        old_versions=True,
     ):
         assert isinstance(cache, bool), \
             'cache must be True or False'
@@ -58,6 +59,11 @@ class FakeUserAgent(object):
                 'safe_attrs must be list\\tuple\\set of strings or unicode'
 
         self.safe_attrs = set(safe_attrs)
+        
+        assert isinstance(old_versions, bool), \
+            'old_versions must be True or False'
+
+        self.old_versions = old_versions
 
         # initial empty data
         self.data = {}
@@ -76,11 +82,13 @@ class FakeUserAgent(object):
                         self.path,
                         use_cache_server=self.use_cache_server,
                         verify_ssl=self.verify_ssl,
+                        old_versions=self.old_versions,
                     )
                 else:
                     self.data = load(
                         use_cache_server=self.use_cache_server,
                         verify_ssl=self.verify_ssl,
+                        old_versions=self.old_versions,
                     )
 
                 # TODO: change source file format
