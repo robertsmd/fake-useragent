@@ -113,7 +113,7 @@ def get_browsers(verify_ssl=True):
     return list(zip(browsers, browsers_statistics))
 
 
-def get_browser_versions(browser, verify_ssl=True):
+def get_browser_versions(browser, verify_ssl=True, old_versions=True):
     """
     very very hardcoded/dirty re/split stuff, but no dependencies
     """
@@ -136,6 +136,9 @@ def get_browser_versions(browser, verify_ssl=True):
 
         browsers.append(browser.group(1))
 
+        if not old_versions:
+            break
+
         if len(browsers) == settings.BROWSERS_COUNT_LIMIT:
             break
 
@@ -146,7 +149,7 @@ def get_browser_versions(browser, verify_ssl=True):
     return browsers
 
 
-def load(use_cache_server=True, verify_ssl=True):
+def load(use_cache_server=True, verify_ssl=True, old_versions=True):
     browsers_dict = {}
     randomize_dict = {}
 
@@ -164,6 +167,7 @@ def load(use_cache_server=True, verify_ssl=True):
             browsers_dict[browser_key] = get_browser_versions(
                 browser,
                 verify_ssl=verify_ssl,
+                old_versions=old_versions,
             )
 
             # it is actually so bad way for randomizing, simple list with
